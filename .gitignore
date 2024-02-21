@@ -16,8 +16,7 @@
 .vscode
 /*.webm
 CMakeCache.txt
-CMakeFiles
-Debug
+out
 Makefile
 Release
 core

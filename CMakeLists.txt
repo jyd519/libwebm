@@ -340,6 +340,7 @@ add_library(mkvparser OBJECT ${mkvparser_sources})
 add_library(webvtt_common OBJECT ${webvtt_common_sources})
 
 add_library(webm ${libwebm_common_sources} $<TARGET_OBJECTS:mkvmuxer>
+                 $<TARGET_OBJECTS:webvtt_common>
                  $<TARGET_OBJECTS:mkvparser>)
 
 if(ENABLE_SAMPLE_PROGRAMS)
