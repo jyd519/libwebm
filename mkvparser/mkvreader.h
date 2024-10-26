@@ -11,8 +11,8 @@
 #include <cstdio>
 
 #include "mkvparser/mkvparser.h"
-
 namespace mkvparser {
+
 
 class MkvReader : public IMkvReader {
  public:
@@ -20,7 +20,9 @@ class MkvReader : public IMkvReader {
   explicit MkvReader(FILE* fp);
   virtual ~MkvReader();
 
+
   int Open(const char*);
+
   void Close();
 
   virtual int Read(long long position, long length, unsigned char* buffer);

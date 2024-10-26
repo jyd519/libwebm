@@ -12,6 +12,10 @@
 #define MSC_COMPAT
 #endif
 
+#if defined(_MSC_VER)
+#pragma warning(disable: 4456 4457)
+#endif
+
 #include <cassert>
 #include <cfloat>
 #include <climits>

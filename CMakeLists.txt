@@ -8,6 +8,16 @@
 cmake_minimum_required(VERSION 3.2)
 project(LIBWEBM CXX)
 
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    set(ARCH_POSTFIX "")
+else()
+    set(ARCH_POSTFIX 64)
+endif()
+
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
+
 include(GNUInstallDirs)
 include("${CMAKE_CURRENT_SOURCE_DIR}/build/cxx_flags.cmake")
 
@@ -342,6 +352,7 @@ add_library(webvtt_common OBJECT ${webvtt_common_sources})
 add_library(webm ${libwebm_common_sources} $<TARGET_OBJECTS:mkvmuxer>
                  $<TARGET_OBJECTS:webvtt_common>
                  $<TARGET_OBJECTS:mkvparser>)
+target_include_directories(webm PUBLIC .)
 
 if(ENABLE_SAMPLE_PROGRAMS)
   add_executable(mkvparser_sample ${mkvparser_sample_sources})
@@ -452,6 +463,13 @@ if(ENABLE_IWYU)
     message(STATUS "  iwyu_tool_path=" ${iwyu_tool_path})
     message(STATUS "  PYTHONINTERP_FOUND=" ${PYTHONINTERP_FOUND})
     message(STATUS "  See README.libwebm for more information.")
+  endif()
+endif()
+
+set_target_properties(webm PROPERTIES RELEASE_POSTFIX "${ARCH_POSTFIX}")
+if (WIN32)
+  if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set_target_properties(webm PROPERTIES DEBUG_POSTFIX "${ARCH_POSTFIX}d")
   endif()
 endif()
 
